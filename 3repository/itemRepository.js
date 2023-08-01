@@ -1,7 +1,7 @@
 //  3repository/itemRepository.js
 
 const Item = require("../0DB/models/item");
-console.log("Items :", typeof Item, Item);
+// console.log("Items :", typeof Item, Item);
 const { sequelize } = require("../0DB/models");
 const { QueryTypes } = require("sequelize");
 
@@ -27,6 +27,24 @@ class ItemRepositories {
       });
       return addItem;
     }
+  };
+
+  itemInquiryRepository = async (orderFilter, orderSort) => {
+    console.log("orderFilter:", typeof orderFilter, orderFilter);
+
+    let whereClause;
+    if (orderFilter !== "all") {
+      whereClause = `{ type: orderFilter }`;
+    } else {
+      whereClause = {};
+    }
+
+    const Inquiry = await Item.findAll({
+      where: whereClause,
+      attributes: { exclude: ["itemOrderCustomerId"] },
+    });
+
+    return Inquiry;
   };
 }
 

@@ -41,5 +41,3 @@ const Item = connector.sequelize.define(
 );
 
 module.exports = Item;
-
-console.log("11Items :", typeof Item, Item);

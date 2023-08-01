@@ -6,6 +6,7 @@ const router = express.Router();
 const ItemControllers = require("../1controller/itemsController");
 const itemControllers = new ItemControllers();
 
-router.post("/addItem", itemControllers.itemCreateController);
+router.post("/item", itemControllers.itemCreateController);
+router.get("/item", itemControllers.itemInquiryController);
 
 module.exports = router;

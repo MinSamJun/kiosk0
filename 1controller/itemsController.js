@@ -18,6 +18,13 @@ class ItemControllers {
     );
     return res.status(status).json({ message });
   };
+
+  itemInquiryController = async (req, res) => {
+    const { orderFilter, orderSort } = req.body;
+    const { status, message, Inquiry } =
+      await this.ItemService.itemInquiryService(orderFilter, orderSort);
+    return res.status(status).json({ message, Inquiry });
+  };
 }
 
 module.exports = ItemControllers;
