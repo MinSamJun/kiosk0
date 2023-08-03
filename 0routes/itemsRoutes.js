@@ -8,5 +8,8 @@ const itemControllers = new ItemControllers();
 
 router.post("/item", itemControllers.itemCreateController);
 router.get("/item", itemControllers.itemInquiryController);
+router.get("/amount", itemControllers.itemAmountController);
+router.delete("/delete/:deleteId", itemControllers.itemDestoryConroller);
+router.patch("/update", itemControllers.itemUdateConroller);
 
 module.exports = router;

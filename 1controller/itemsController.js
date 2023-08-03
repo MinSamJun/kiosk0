@@ -25,6 +25,46 @@ class ItemControllers {
       await this.ItemService.itemInquiryService(orderFilter, orderSort);
     return res.status(status).json({ message, Inquiry });
   };
+
+  itemAmountController = async (req, res) => {
+    const { name } = req.body;
+    const { status, message, deleteId } =
+      await this.ItemService.itemAmountService(name);
+
+    // if (sureDelete === "1") {
+
+    // }
+
+    return res.status(status).json({ message, status, deleteId });
+  };
+
+  itemDestoryConroller = async (req, res) => {
+    try {
+      const { deleteId } = req.params;
+      const { status, message } = await this.ItemService.itemDeleteService(
+        deleteId
+      );
+      return res.status(status).json({ message });
+    } catch (err) {
+      return { status: 400, message: err.message };
+    }
+  };
+
+  itemUdateConroller = async (req, res) => {
+    try {
+      const { name, nameToUpdate, price, type, amount } = req.body;
+      const { status, message } = await this.ItemService.itemUdateService(
+        name,
+        nameToUpdate,
+        price,
+        type,
+        amount
+      );
+      return res.status(status).json({ message });
+    } catch (err) {
+      return { status: 400, message: err.message };
+    }
+  };
 }
 
 module.exports = ItemControllers;

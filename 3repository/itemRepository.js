@@ -8,7 +8,7 @@ const { QueryTypes } = require("sequelize");
 class ItemRepositories {
   // 메뉴등록
   itemCreateRepository = async (name, price, type) => {
-    console.log("함수내 Item :", typeof Item, Item);
+    // console.log("함수내 Item :", typeof Item, Item);
     const isExist = await Item.findOne({
       where: {
         name: name,
@@ -30,11 +30,11 @@ class ItemRepositories {
   };
 
   itemInquiryRepository = async (orderFilter, orderSort) => {
-    console.log("orderFilter:", typeof orderFilter, orderFilter);
+    // console.log("orderFilter:", typeof orderFilter, orderFilter);
 
     let whereClause;
     if (orderFilter !== "all") {
-      whereClause = `{ type: orderFilter }`;
+      whereClause = { type: orderFilter };
     } else {
       whereClause = {};
     }
@@ -45,6 +45,46 @@ class ItemRepositories {
     });
 
     return Inquiry;
+  };
+
+  itemAmountRepository = async (name) => {
+    const itemAmount = await Item.findOne({
+      where: { name: name },
+      attributes: { exclude: ["itemOrderCustomerId"] },
+    });
+
+    return itemAmount;
+  };
+
+  itemDeleteRepository = async (deleteId) => {
+    try {
+      const isDelete = await Item.destroy({
+        where: { id: deleteId },
+        attributes: { exclude: ["itemOrderCustomerId"] },
+      });
+
+      return isDelete;
+    } catch (err) {
+      return { status: 400, message: err.message };
+    }
+  };
+
+  itemUpdateRepository = async (name, nameToUpdate, price, type, amount) => {
+    try {
+      const post = await Item.update(
+        {
+          name: nameToUpdate,
+          price,
+          type,
+          amount,
+        },
+        { where: { name } }
+      );
+      // 내보낸다.
+      return post;
+    } catch (err) {
+      return { status: 400, message: err.message };
+    }
   };
 }
 
