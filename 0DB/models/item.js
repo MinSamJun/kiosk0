@@ -2,11 +2,13 @@
 
 const DataTypes = require("sequelize").DataTypes;
 const connector = require("../dbSequelize");
+
 const itemType = {
   COFFEE: "coffee",
   JUICE: "juice",
   FOOD: "food",
 };
+
 const Item = connector.sequelize.define(
   "items",
   {
@@ -26,9 +28,7 @@ const Item = connector.sequelize.define(
       allowNull: false,
     },
     type: {
-      type: DataTypes.ENUM({
-        values: ["coffee", "juice", "food"],
-      }),
+      type: DataTypes.ENUM(Object.values(itemType)),
       allowNull: false,
     },
     amount: {

@@ -3,8 +3,15 @@
 const DataTypes = require("sequelize").DataTypes;
 const connector = require("../dbSequelize");
 
+const orderItemState = {
+  ORDERED: 0,
+  PENDING: 1,
+  COMPLETED: 2,
+  CANCELED: 3,
+};
+
 const Order_item = connector.sequelize.define(
-  "order_item",
+  "order_items",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -12,13 +19,18 @@ const Order_item = connector.sequelize.define(
       allowNull: false,
       autoIncrement: true,
     },
+    item_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     amount: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
     state: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.ENUM(Object.values(orderItemState)),
       allowNull: false,
+      defaultValue: orderItemState.ORDERED,
     },
   },
   { timestamps: true }

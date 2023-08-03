@@ -2,7 +2,8 @@
 
 const Item = require("../0DB/models/item");
 // console.log("Items :", typeof Item, Item);
-const { sequelize } = require("../0DB/models");
+const { except } = require("../0DB/models/except");
+const Sequelize = require("../0DB/dbSequelize");
 const { QueryTypes } = require("sequelize");
 
 class ItemRepositories {
@@ -41,7 +42,7 @@ class ItemRepositories {
 
     const Inquiry = await Item.findAll({
       where: whereClause,
-      attributes: { exclude: ["itemOrderCustomerId"] },
+      attributes: except(),
     });
 
     return Inquiry;
@@ -50,7 +51,7 @@ class ItemRepositories {
   itemAmountRepository = async (name) => {
     const itemAmount = await Item.findOne({
       where: { name: name },
-      attributes: { exclude: ["itemOrderCustomerId"] },
+      attributes: except(),
     });
 
     return itemAmount;
