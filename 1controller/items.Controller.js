@@ -1,6 +1,6 @@
 // 1controller.itemsController.js
 
-const ItemServices = require("../2service/itemService");
+const ItemServices = require("../2service/item.Service");
 
 class ItemControllers {
   ItemService = new ItemServices();

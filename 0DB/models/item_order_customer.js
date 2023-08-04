@@ -12,6 +12,14 @@ const Item_order_customer = connector.sequelize.define(
       allowNull: false,
       autoIncrement: true,
     },
+    item_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    order_customer_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     amount: {
       type: DataTypes.INTEGER,
       allowNull: false,

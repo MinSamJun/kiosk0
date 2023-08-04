@@ -1,6 +1,6 @@
 //  2service/itemOrderService.js
 
-const ItemOrderRepositories = require("../3repository/itemOrderRepository");
+const ItemOrderRepositories = require("../3repository/itemOrder.Repository");
 
 class ItemOrderServices {
   ItemOrderRepositories = new ItemOrderRepositories();
@@ -54,6 +54,7 @@ class ItemOrderServices {
         orderID,
         status
       );
+
       if (statusNow.state === status) {
         return {
           status: 400,
@@ -72,7 +73,33 @@ class ItemOrderServices {
           };
         }
       }
-      await this.ItemOrderRepositories.patchStatusById(orderID, status);
+      const statusUpdate = await this.ItemOrderRepositories.patchStatusById(
+        orderID,
+        status
+      );
+
+      if (statusUpdate === 1) {
+        const statusNow = await this.ItemOrderRepositories.getStatusById(
+          orderID,
+          status
+        );
+      }
+      var amountNow = statusNow.amount;
+      var idNow = statusNow.item_id;
+      var stateNow = statusNow.state;
+
+      var pluMin;
+
+      if (stateNow === "COMPLETED") {
+        pluMin = -1;
+      } else if (stateNow !== "COMPLETED") {
+        pluMin = 1;
+      }
+      await this.ItemOrderRepositories.patchItemAmount(
+        idNow,
+        pluMin,
+        amountNow
+      );
       return { status: 200, message: "발주 수정이 완료되었습니다." };
     } catch (err) {
       return { status: 400, message: err.message };

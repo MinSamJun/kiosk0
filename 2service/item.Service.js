@@ -1,6 +1,6 @@
 //  2service/itemService.js
 
-const ItemRepositories = require("../3repository/itemRepository");
+const ItemRepositories = require("../3repository/item.Repository");
 // const itemType = require("../0DB/models/item");
 
 // console.log("itemType :", typeof itemType, itemType);

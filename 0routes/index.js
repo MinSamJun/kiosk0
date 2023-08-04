@@ -1,7 +1,8 @@
 // 0routes/index.js
 
-const itemRouter = require("./itemsRoutes");
-const itemOrderRouter = require("./itemOrderRoutes");
+const itemRouter = require("./items.Routes");
+const itemOrderRouter = require("./itemOrder.Routes");
+const ordercustomerRouter = require("./orderCustomer.Routes");
 
 const express = require("express");
 const router = express.Router();
@@ -14,6 +15,10 @@ const routers = [
   {
     path: "/itemOrder",
     router: itemOrderRouter,
+  },
+  {
+    path: "/itemOrder",
+    router: ordercustomerRouter,
   },
 ];
 

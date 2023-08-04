@@ -1,15 +1,15 @@
 // 1controller.itemsOrderController.js
 
-const ItemOrderServices = require("../2service/itemOrderService");
+const ItemOrderServices = require("../2service/itemOrder.Service");
 
 class ItemOrderControllers {
-  ItemOrderService = new ItemOrderServices();
+  itemOrderService = new ItemOrderServices();
 
   itemOrderController = async (req, res) => {
     try {
       const { orderItemID } = req.params;
       const { amount } = req.body;
-      const result = await this.ItemOrderService.itemOrderService(
+      const result = await this.itemOrderService.itemOrderService(
         orderItemID,
         amount
       );
@@ -26,7 +26,7 @@ class ItemOrderControllers {
     try {
       const { orderID } = req.params;
       const { status } = req.body;
-      const result = await this.ItemOrderService.itemOrderUpdate_Service(
+      const result = await this.itemOrderService.itemOrderUpdate_Service(
         orderID,
         status
       );

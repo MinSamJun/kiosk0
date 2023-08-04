@@ -1,9 +1,9 @@
-//  0routes/itemsOrderRoutes.js
+//  0routes/itemsOrder.Routes.js
 
 const express = require("express");
 const router = express.Router();
 
-const ItemOrderControllers = require("../1controller/itemOrderController");
+const ItemOrderControllers = require("../1controller/itemOrder.Controller");
 const itemOrderControllers = new ItemOrderControllers();
 
 router.get("/order/:orderItemID", itemOrderControllers.itemOrderController);

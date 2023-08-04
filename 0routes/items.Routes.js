@@ -3,7 +3,7 @@
 const express = require("express");
 const router = express.Router();
 
-const ItemControllers = require("../1controller/itemsController");
+const ItemControllers = require("../1controller/items.Controller");
 const itemControllers = new ItemControllers();
 
 router.post("/item", itemControllers.itemCreateController);
