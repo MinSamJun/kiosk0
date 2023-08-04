@@ -4,7 +4,7 @@ const DataTypes = require("sequelize").DataTypes;
 const connector = require("../dbSequelize");
 
 const Order_customer = connector.sequelize.define(
-  "order_customer",
+  "order_customers",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -14,6 +14,10 @@ const Order_customer = connector.sequelize.define(
     },
     state: {
       type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    fullPrice: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },

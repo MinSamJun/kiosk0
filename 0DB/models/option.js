@@ -4,7 +4,7 @@ const DataTypes = require("sequelize").DataTypes;
 const connector = require("../dbSequelize");
 
 const Option = connector.sequelize.define(
-  "item_order_customer",
+  "item_order_customers",
   {
     id: {
       type: DataTypes.INTEGER,

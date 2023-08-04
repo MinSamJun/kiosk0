@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("item_order_customer", {
+    await queryInterface.createTable("item_order_customers", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -12,19 +12,13 @@ module.exports = {
       item_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-          model: "Items",
-          key: "id",
-        },
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
       },
       amount: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      state: {
-        type: Sequelize.ENUM("ORDERED", "PENDING", "COMPLETED", "CANCELED"),
+      price: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       createdAt: {
@@ -39,6 +33,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("item_order_customer");
+    await queryInterface.dropTable("item_order_customers");
   },
 };

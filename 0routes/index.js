@@ -17,7 +17,7 @@ const routers = [
     router: itemOrderRouter,
   },
   {
-    path: "/itemOrder",
+    path: "/orderCustomer",
     router: ordercustomerRouter,
   },
 ];
