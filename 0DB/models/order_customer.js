@@ -15,10 +15,12 @@ const Order_customer = connector.sequelize.define(
     state: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: false,
     },
     fullPrice: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 0,
     },
   },
   { timestamps: true }

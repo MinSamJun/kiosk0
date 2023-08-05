@@ -5,6 +5,18 @@ const OrderCustomerServices = require("../2service//orderCustomer.Service");
 class OrderCustomerControllers {
   orderCustomerServices = new OrderCustomerServices();
 
+  starOrderCustomerController = async (req, res) => {
+    try {
+      const startOrder =
+        await this.orderCustomerServices.starOrderCustomerService();
+      return res
+        .status(startOrder.status)
+        .json({ message: startOrder.message });
+    } catch (err) {
+      return res.status(400).json({ message: err.message });
+    }
+  };
+
   orderCustomerController = async (req, res) => {
     try {
       const { orderItemID } = req.params;

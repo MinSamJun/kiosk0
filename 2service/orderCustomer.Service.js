@@ -7,6 +7,19 @@ class OrderCustomerServices {
   orderCustomerRepository = new OrderCustomerRepository();
   ItemOrderRepositories = new ItemOrderRepositories();
 
+  starOrderCustomerService = async () => {
+    try {
+      const orderId =
+        await this.ItemOrderRepositories.starOrderCustomerRepository();
+      return {
+        status: 200,
+        message: `주문 아이디 ${orderId.id} 생성완료`,
+      };
+    } catch (err) {
+      return { status: 400, message: err.message };
+    }
+  };
+
   orderCustomerServices = async (orderItemID, amount) => {
     try {
       if (!amount || amount === 0) {
@@ -40,6 +53,7 @@ class OrderCustomerServices {
         };
       }
       let fullPrice = makeOrder.price * makeOrder.amount;
+      await this.orderCustomerRepository.addFullPrice(fullPrice);
       return {
         status: 200,
         message: `결제하실 가격은 ${fullPrice} 원 입니다.`,

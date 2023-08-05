@@ -3,6 +3,9 @@
 const ItemRepositories = require("../3repository/item.Repository");
 // const itemType = require("../0DB/models/item");
 
+require("dotenv").config();
+const env = process.env;
+
 // console.log("itemType :", typeof itemType, itemType);
 
 // 값을 입력받기 위함
@@ -13,8 +16,11 @@ class ItemServices {
 
   // 메뉴 등록
   itemCreateService = async (name, price, type, passwrod) => {
+    console.log("매서드실행");
     try {
-      if (passwrod !== "15228016") {
+      console.log("트라이진입");
+      if (passwrod !== env.Admin_Pass) {
+        console.log("이프문통과");
         return {
           status: 400,
           message: "비밀번호를 확인해주세요",
@@ -49,8 +55,14 @@ class ItemServices {
     }
   };
 
-  itemInquiryService = async (orderFilter, orderSort) => {
+  itemInquiryService = async (orderFilter, orderSort, passwrod) => {
     try {
+      if (passwrod !== env.Admin_Pass) {
+        return {
+          status: 400,
+          message: "비밀번호를 확인해주세요",
+        };
+      }
       if (
         orderFilter !== "all" &&
         orderFilter !== "coffee" &&
@@ -86,8 +98,17 @@ class ItemServices {
     }
   };
 
-  itemAmountService = async (name) => {
-    const isSoldOut = await this.ItemRepositories.itemAmountRepository(name);
+  itemAmountService = async (name, passwrod) => {
+    if (passwrod !== env.Admin_Pass) {
+      return {
+        status: 400,
+        message: "비밀번호를 확인해주세요",
+      };
+    }
+    const isSoldOut = await this.ItemRepositories.itemAmountRepository(
+      name,
+      passwrod
+    );
     try {
       // let sureDelete = "0";
 
@@ -130,7 +151,13 @@ class ItemServices {
   //   });
   // }
 
-  itemDeleteService = async (deleteId) => {
+  itemDeleteService = async (deleteId, passwrod) => {
+    if (passwrod !== env.Admin_Pass) {
+      return {
+        status: 400,
+        message: "비밀번호를 확인해주세요",
+      };
+    }
     const isDelete = await this.ItemRepositories.itemDeleteRepository(deleteId);
     try {
       if (isDelete) {
@@ -144,7 +171,20 @@ class ItemServices {
     }
   };
 
-  itemUdateService = async (name, nameToUpdate, price, type, amount) => {
+  itemUdateService = async (
+    name,
+    nameToUpdate,
+    price,
+    type,
+    amount,
+    passwrod
+  ) => {
+    if (passwrod !== env.Admin_Pass) {
+      return {
+        status: 400,
+        message: "비밀번호를 확인해주세요",
+      };
+    }
     try {
       if (!name) {
         return {

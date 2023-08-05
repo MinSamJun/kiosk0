@@ -7,6 +7,10 @@ const OrderCustomerControllers = require("../1controller/orderCustomer.Controlle
 const orderCustomerControllers = new OrderCustomerControllers();
 
 router.post(
+  "/order/start",
+  orderCustomerControllers.starOrderCustomerController
+);
+router.post(
   "/order/:orderItemID",
   orderCustomerControllers.orderCustomerController
 );

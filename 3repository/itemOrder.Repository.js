@@ -2,6 +2,7 @@
 
 const Item = require("../0DB/models/item");
 const Order_item = require("../0DB/models/order_item");
+const Order_customer = require("../0DB/models/order_customer");
 const { except } = require("../0DB/models/except");
 // const { sequelize } = require("../0DB/models");
 // models가 아니라 models에서 배열로 내보낸 Item의 sequelize를 가져와야한다...
@@ -10,6 +11,12 @@ const sequelize = models[0].sequelize;
 const { QueryTypes } = require("sequelize");
 
 class ItemOrderRepositories {
+  starOrderCustomerRepository = async () => {
+    const startOrder = await Order_customer.create({
+      state: "false",
+    });
+    return startOrder;
+  };
   //  발주 넣기
   // 품목 존재 확인
   getItemById = async (orderItemID) => {
@@ -24,11 +31,19 @@ class ItemOrderRepositories {
   };
   // 발주 넣기
   registerOrder = async (orderItemID, amount, state) => {
-    console.log("amount :", typeof amount, amount);
+    const maxOrderIdResult = await sequelize.query(
+      "SELECT MAX(id) AS maxId FROM order_customers;",
+      { type: QueryTypes.SELECT }
+    );
+
+    const maxOrderId = maxOrderIdResult[0].maxId;
+    console.log("maxOrderId", typeof maxOrderId, maxOrderId);
+
     const addOrder = await Order_item.create({
       item_id: orderItemID,
       amount,
       state,
+      order_customers_id: maxOrderId,
     });
     return addOrder;
   };
