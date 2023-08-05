@@ -45,7 +45,7 @@ class OrderCustomerServices {
         amount,
         isExistItem.price
       );
-      console.log("서비스 :", makeOrder);
+
       if (!makeOrder) {
         return {
           status: 400,
@@ -61,6 +61,47 @@ class OrderCustomerServices {
     } catch (err) {
       return { status: 400, message: err.message };
     }
+  };
+
+  orderCustomerPatch_Service = async (orderID, satus) => {
+    try {
+      if (satus !== "true" && satus !== "false") {
+        return {
+          status: 400,
+          message: `satusd의 값은 'true' 또는 'false' 로만 해주세요`,
+        };
+      }
+
+      const isExistOrder =
+        await this.orderCustomerRepository.isExistOrder_Repository(orderID);
+
+      if (!isExistOrder) {
+        return {
+          status: 400,
+          message: "주문 번호를 확인해주세요.",
+        };
+      }
+
+      if (isExistOrder.state === true && satus === "false") {
+        return {
+          status: 400,
+          message: "이미 서비스가 완료 된 경우 취소가 불가능합니다.",
+        };
+      } else if (isExistOrder.state === true && satus === "true") {
+        return {
+          status: 400,
+          message: "이미 서비스가 완료 된 주문입니다.",
+        };
+      }
+
+      const completeOrder =
+        await this.orderCustomerRepository.completeOrder_Repository(orderID);
+
+      return {
+        status: 200,
+        message: ` 주문번호 ${orderID} 서비스 완료.`,
+      };
+    } catch (err) {}
   };
 }
 

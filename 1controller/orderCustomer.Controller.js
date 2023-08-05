@@ -25,11 +25,28 @@ class OrderCustomerControllers {
         orderItemID,
         amount
       );
-      console.log("result :", typeof result, result);
+
       if (result) {
         return res.status(result.status).json({ message: result.message });
       }
       return res.status(result.status).json({ message: result.message });
+    } catch (err) {
+      return res.status(400).json({ message: err.message });
+    }
+  };
+
+  orderCustomerPatch_Controller = async (req, res) => {
+    try {
+      const { orderID } = req.params;
+      const { satus } = req.body;
+      const orderPatch =
+        await this.orderCustomerServices.orderCustomerPatch_Service(
+          orderID,
+          satus
+        );
+      return res
+        .status(orderPatch.status)
+        .json({ orderID: orderPatch.message });
     } catch (err) {
       return res.status(400).json({ message: err.message });
     }

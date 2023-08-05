@@ -14,5 +14,9 @@ router.post(
   "/order/:orderItemID",
   orderCustomerControllers.orderCustomerController
 );
+router.patch(
+  "/order/:orderID",
+  orderCustomerControllers.orderCustomerPatch_Controller
+);
 
 module.exports = router;
