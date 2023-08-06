@@ -20,7 +20,12 @@ class OrderCustomerServices {
     }
   };
 
-  orderCustomerServices = async (orderItemID, amount) => {
+  orderCustomerServices = async (
+    orderItemID,
+    amount,
+    extra_TF,
+    shot_amount
+  ) => {
     try {
       if (!amount || amount === 0) {
         return {
@@ -40,10 +45,17 @@ class OrderCustomerServices {
         };
       }
 
+      const makeOption = await this.orderCustomerRepository.makeOption(
+        extra_TF,
+        shot_amount
+      );
+
+      let priceInOption = isExistItem.price;
+
       const makeOrder = await this.orderCustomerRepository.makeOrder(
         orderItemID,
         amount,
-        isExistItem.price
+        priceInOption
       );
 
       if (!makeOrder) {

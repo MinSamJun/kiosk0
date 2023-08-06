@@ -12,14 +12,37 @@ const Item_order_customer = connector.sequelize.define(
       allowNull: false,
       autoIncrement: true,
     },
+
     item_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+
     order_customers_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+
+    option_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    extra_TF: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    shot_amount: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    hot_TF: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+
     amount: {
       type: DataTypes.INTEGER,
       allowNull: false,

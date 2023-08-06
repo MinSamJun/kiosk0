@@ -9,14 +9,37 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
       },
+
       item_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+
       order_customers_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+
+      option_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      extra_TF: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      shot_amount: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      hot_TF: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+
       amount: {
         type: Sequelize.INTEGER,
         allowNull: false,

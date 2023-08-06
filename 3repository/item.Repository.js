@@ -9,7 +9,6 @@ const { QueryTypes } = require("sequelize");
 class ItemRepositories {
   // 메뉴등록
   itemCreateRepository = async (name, price, type) => {
-    // console.log("함수내 Item :", typeof Item, Item);
     const isExist = await Item.findOne({
       where: {
         name: name,

@@ -4,7 +4,7 @@ const DataTypes = require("sequelize").DataTypes;
 const connector = require("../dbSequelize");
 
 const Option = connector.sequelize.define(
-  "item_order_customers",
+  "options",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -12,9 +12,22 @@ const Option = connector.sequelize.define(
       allowNull: false,
       autoIncrement: true,
     },
-    amount: {
-      type: DataTypes.INTEGER,
+    option_name: {
+      type: DataTypes.STRING,
+      unique: true,
       allowNull: false,
+    },
+    extra_price: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    shot_price: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    hot_price: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
     },
   },
   { timestamps: true }

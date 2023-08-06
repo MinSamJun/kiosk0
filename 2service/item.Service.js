@@ -16,11 +16,8 @@ class ItemServices {
 
   // 메뉴 등록
   itemCreateService = async (name, price, type, passwrod) => {
-    console.log("매서드실행");
     try {
-      console.log("트라이진입");
       if (passwrod !== env.Admin_Pass) {
-        console.log("이프문통과");
         return {
           status: 400,
           message: "비밀번호를 확인해주세요",
@@ -47,7 +44,7 @@ class ItemServices {
         type
       );
 
-      if (addItem) {
+      if (addItem !== null) {
         return { status: 200, message: "메뉴 등록에 성공했습니다." };
       }
     } catch (err) {
@@ -110,14 +107,6 @@ class ItemServices {
       passwrod
     );
     try {
-      // let sureDelete = "0";
-
-      // if (isSoldOut.amount !== 0) {
-      //   sureDelete = await this.getYesOrNoInput(name);
-      // } else if (isSoldOut.amount === 0) {
-      //   sureDelete = "1";
-      // }
-
       const remainAmount = isSoldOut.amount;
       const deleteId = isSoldOut.id;
 
@@ -125,31 +114,11 @@ class ItemServices {
         status: 200,
         message: "메뉴 수량 조회 완료",
         deleteId,
-
-        // isSoldOut,
-        // sureDelete,
       };
     } catch (err) {
       return { status: 400, message: err.message };
     }
   };
-
-  // async getYesOrNoInput(name) {
-  //   const rl = readline.createInterface({
-  //     input: process.stdin,
-  //     output: process.stdout,
-  //   });
-
-  //   return new Promise((resolve) => {
-  //     rl.question(
-  //       `현재  '${name}'메뉴의 잔량이 있습니다. 삭제하시겠습니까? 삭제를 원하면 "1"를 입력해주세요: `,
-  //       (answer) => {
-  //         rl.close();
-  //         resolve(answer === "1" ? 1 : 0);
-  //       }
-  //     );
-  //   });
-  // }
 
   itemDeleteService = async (deleteId, passwrod) => {
     if (passwrod !== env.Admin_Pass) {

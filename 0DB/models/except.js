@@ -1,5 +1,5 @@
 const except = () => {
-  return { exclude: ["itemOrderCustomerId", "itemId"] };
+  return { exclude: ["itemOrderCustomerId", "itemId", "optionId"] };
 };
 
 module.exports = {

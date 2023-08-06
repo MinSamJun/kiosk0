@@ -3,6 +3,7 @@
 const Order_customer = require("../0DB/models/order_customer");
 const Item_order_customer = require("../0DB/models/item_order_customer");
 const Item = require("../0DB/models/item");
+const Option = require("../0DB/models/option");
 const { except } = require("../0DB/models/except");
 // const { sequelize } = require("../0DB/models");
 // models가 아니라 models에서 배열로 내보낸 Item의 sequelize를 가져와야한다...
@@ -11,6 +12,14 @@ const sequelize = models[0].sequelize;
 const { QueryTypes } = require("sequelize");
 
 class orderCustomerRepositories {
+  // 옵션 받기
+  makeOption = async (extra_TF, shot_amount) => {
+    const makeOption = await Option.create({
+      extra_TF,
+      shot_amount,
+    });
+  };
+
   // 개별주문하기
   makeOrder = async (orderItemID, amount, price) => {
     try {

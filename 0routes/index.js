@@ -3,6 +3,7 @@
 const itemRouter = require("./items.Routes");
 const itemOrderRouter = require("./itemOrder.Routes");
 const ordercustomerRouter = require("./orderCustomer.Routes");
+const option = require("./option.routes");
 
 const express = require("express");
 const router = express.Router();
@@ -19,6 +20,10 @@ const routers = [
   {
     path: "/orderCustomer",
     router: ordercustomerRouter,
+  },
+  {
+    path: "/option",
+    router: option,
   },
 ];
 
