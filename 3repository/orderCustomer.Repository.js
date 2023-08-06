@@ -45,7 +45,7 @@ class orderCustomerRepositories {
             hot_TF: hot_TF,
             amount: amount,
             price: priceInOption,
-            order_customers_id: maxOrderId + 1,
+            order_customers_id: maxOrderId,
           },
           { transaction }
         );
@@ -71,7 +71,7 @@ class orderCustomerRepositories {
 
         const addFullPrice = await Order_customer.increment(
           { fullPrice },
-          { where: { id: maxOrderId + 1 }, transaction }
+          { where: { id: maxOrderId }, transaction }
         );
 
         return addFullPrice;
@@ -91,27 +91,45 @@ class orderCustomerRepositories {
   };
   // 주문 상태 바꾸기
   completeOrder_Repository = async (orderID) => {
+    console.log("주문상태바꾸기");
     try {
       return await sequelize.transaction(async (transaction) => {
-        const orderComplete = await Order_customer.update(
-          { state: true },
-          { where: { id: orderID }, transaction }
-        );
-
-        const itemOrderCustomers = await Item_order_customer.findAll({
-          where: { order_customers_id: orderID },
-          attributes: ["item_id", "order_customers_id", "amount"],
-          transaction,
+        let orderComplete;
+        const isOrderExist = await Order_customer.findOne({
+          where: { id: orderID, state: false }, // state가 false인 경우에만 업데이트 수행
         });
 
-        for (const itemOrderCustomer of itemOrderCustomers) {
-          const itemId = itemOrderCustomer.item_id;
-          const amountToDecrease = itemOrderCustomer.amount;
-
-          await Item.update(
-            { amount: sequelize.literal(`amount - ${amountToDecrease}`) },
-            { where: { id: itemId }, transaction }
+        if (isOrderExist) {
+          orderComplete = await Order_customer.update(
+            { state: true },
+            { where: { id: orderID }, transaction }
           );
+
+          console.log("개별주문찾기");
+          const itemOrderCustomers = await Item_order_customer.findAll({
+            where: { order_customers_id: orderID },
+            attributes: ["item_id", "order_customers_id", "amount"],
+            transaction,
+          });
+          console.log(
+            "itemOrderCustomers :",
+            typeof itemOrderCustomers,
+            itemOrderCustomers,
+            itemOrderCustomers.length
+          );
+
+          for (let i = 0; i < itemOrderCustomers.length; i++) {
+            const itemId = itemOrderCustomers[i].item_id;
+            const amountToDecrease = itemOrderCustomers[i].amount;
+            console.log("줄이기 회수");
+            await Item.update(
+              { amount: sequelize.literal(`amount - ${amountToDecrease}`) },
+              { where: { id: itemId }, transaction }
+            );
+          }
+          console.log("루프 통과");
+        } else {
+          console.log("이미 주문이 완료된 상태입니다.");
         }
 
         return orderComplete;
@@ -121,26 +139,5 @@ class orderCustomerRepositories {
     }
   };
 }
-
-// // 삭제용
-// await Item_order_customer.destroy({
-//   where: { order_customers_id: orderID },
-// });
-
-// // 감소용
-// const orderItems = await Item_order_customer.findAll({
-//   where: { order_customers_id: orderID },
-// });
-// console.log("orderItems :", typeof orderItems, orderItems);
-// for (const orderItem of orderItems) {
-//   const item = await Item.findOne({ where: { id: orderItem.item_id } });
-//   if (item) {
-//     const minuamount = -orderItem.amount;
-//     await Item.increment(
-//       { amount: minuamount },
-//       { where: { id: orderItem.item_id } }
-//     );
-//   }
-// }
 
 module.exports = orderCustomerRepositories;

@@ -60,14 +60,6 @@ class OrderCustomerServices {
 
       let priceInOption = isExistItem.price + optionPrice;
 
-      console.log(
-        "isExistItem.extra_price :",
-        typeof isExistItem.extra_price,
-        isExistItem.extra_price
-      );
-
-      console.log("메이크오더시작");
-
       const makeOrder = await this.orderCustomerRepository.makeOrder(
         orderItemID,
         amount,
@@ -77,7 +69,7 @@ class OrderCustomerServices {
         priceInOption
       );
 
-      console.log("makeOrder :", typeof makeOrder, makeOrder);
+      // console.log("makeOrder :", typeof makeOrder, makeOrder);
 
       if (!makeOrder) {
         return {
@@ -86,7 +78,7 @@ class OrderCustomerServices {
         };
       }
       let fullPrice = makeOrder.price * makeOrder.amount;
-      console.log("fullPrice :", typeof fullPrice, fullPrice);
+      // console.log("fullPrice :", typeof fullPrice, fullPrice);
       await this.orderCustomerRepository.addFullPrice(fullPrice);
       return {
         status: 200,
