@@ -37,7 +37,7 @@ class ItemServices {
       } else if (type !== "coffee" && type !== "juice" && type !== "food") {
         return {
           status: 400,
-          message: "상품의 카테고리를 제대로 입력해주세요.",
+          message: "카테고리 명은 coffee , juice , food 중 하나입니다.",
         };
       } else if (!option_id) {
         return {
@@ -86,7 +86,7 @@ class ItemServices {
       ) {
         return {
           status: 400,
-          message: "조회할 카테고리를 제대로 입력해주세요.",
+          message: "카테고리 명은 all, coffee , juice , food 중 하나입니다.",
         };
       } else if (
         orderSort !== "name" &&
@@ -147,6 +147,7 @@ class ItemServices {
         message: "비밀번호를 확인해주세요",
       };
     }
+
     const isDelete = await this.ItemRepositories.itemDeleteRepository(deleteId);
     try {
       if (isDelete) {

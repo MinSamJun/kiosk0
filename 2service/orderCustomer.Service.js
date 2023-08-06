@@ -94,7 +94,7 @@ class OrderCustomerServices {
       if (satus !== "true" && satus !== "false") {
         return {
           status: 400,
-          message: `satusd의 값은 'true' 또는 'false' 로만 해주세요`,
+          message: `satus의 값은 'true' 또는 'false' 로만 해주세요`,
         };
       }
 

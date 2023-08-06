@@ -6,7 +6,7 @@ const router = express.Router();
 const ItemOrderControllers = require("../1controller/itemOrder.Controller");
 const itemOrderControllers = new ItemOrderControllers();
 
-router.get("/order/:orderItemID", itemOrderControllers.itemOrderController);
+router.post("/order/:orderItemID", itemOrderControllers.itemOrderController);
 router.patch(
   "/order/:orderID",
   itemOrderControllers.itemOrderUpdate_Controller
