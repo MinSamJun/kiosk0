@@ -23,10 +23,6 @@ const Item_order_customer = connector.sequelize.define(
       allowNull: false,
     },
 
-    option_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     extra_TF: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

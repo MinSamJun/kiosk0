@@ -1,6 +1,7 @@
 //  2service/itemService.js
 
 const ItemRepositories = require("../3repository/item.Repository");
+const OptionRepositories = require("../3repository/Option.Repository.js");
 // const itemType = require("../0DB/models/item");
 
 require("dotenv").config();
@@ -13,9 +14,10 @@ const readline = require("readline");
 
 class ItemServices {
   ItemRepositories = new ItemRepositories();
+  optionRepositories = new OptionRepositories();
 
   // 메뉴 등록
-  itemCreateService = async (name, price, type, passwrod) => {
+  itemCreateService = async (name, price, type, option_id, passwrod) => {
     try {
       if (passwrod !== env.Admin_Pass) {
         return {
@@ -37,11 +39,27 @@ class ItemServices {
           status: 400,
           message: "상품의 카테고리를 제대로 입력해주세요.",
         };
+      } else if (!option_id) {
+        return {
+          status: 400,
+          message: "옵션 번호를 입력하세요",
+        };
+      }
+      const isExistOption = await this.optionRepositories.optionIdRepository(
+        option_id
+      );
+
+      if (!isExistOption) {
+        return {
+          status: 400,
+          message: "존재하지 않는 옵션 번호입니다.",
+        };
       }
       const addItem = await this.ItemRepositories.itemCreateRepository(
         name,
         price,
-        type
+        type,
+        option_id
       );
 
       if (addItem !== null) {
@@ -109,10 +127,12 @@ class ItemServices {
     try {
       const remainAmount = isSoldOut.amount;
       const deleteId = isSoldOut.id;
+      console.log(remainAmount, deleteId);
 
       return {
         status: 200,
         message: "메뉴 수량 조회 완료",
+        remainAmount,
         deleteId,
       };
     } catch (err) {

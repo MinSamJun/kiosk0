@@ -24,7 +24,8 @@ class OrderCustomerServices {
     orderItemID,
     amount,
     extra_TF,
-    shot_amount
+    shot_amount,
+    hot_TF
   ) => {
     try {
       if (!amount || amount === 0) {
@@ -45,18 +46,38 @@ class OrderCustomerServices {
         };
       }
 
-      const makeOption = await this.orderCustomerRepository.makeOption(
-        extra_TF,
-        shot_amount
+      // 옵션 가격 만들기
+      const OptionPrice = await this.orderCustomerRepository.optionPrice(
+        isExistItem.option_id
       );
 
-      let priceInOption = isExistItem.price;
+      let priceOfItem = isExistItem.extra_price;
+
+      let optionPrice =
+        OptionPrice.extra_price * Number(extra_TF) +
+        OptionPrice.shot_price * shot_amount +
+        OptionPrice.hot_price * Number(hot_TF);
+
+      let priceInOption = isExistItem.price + optionPrice;
+
+      console.log(
+        "isExistItem.extra_price :",
+        typeof isExistItem.extra_price,
+        isExistItem.extra_price
+      );
+
+      console.log("메이크오더시작");
 
       const makeOrder = await this.orderCustomerRepository.makeOrder(
         orderItemID,
         amount,
+        extra_TF,
+        shot_amount,
+        hot_TF,
         priceInOption
       );
+
+      console.log("makeOrder :", typeof makeOrder, makeOrder);
 
       if (!makeOrder) {
         return {
@@ -65,6 +86,7 @@ class OrderCustomerServices {
         };
       }
       let fullPrice = makeOrder.price * makeOrder.amount;
+      console.log("fullPrice :", typeof fullPrice, fullPrice);
       await this.orderCustomerRepository.addFullPrice(fullPrice);
       return {
         status: 200,

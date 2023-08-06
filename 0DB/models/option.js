@@ -26,7 +26,7 @@ const Option = connector.sequelize.define(
       allowNull: true,
     },
     hot_price: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
   },

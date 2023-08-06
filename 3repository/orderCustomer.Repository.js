@@ -12,16 +12,21 @@ const sequelize = models[0].sequelize;
 const { QueryTypes } = require("sequelize");
 
 class orderCustomerRepositories {
-  // 옵션 받기
-  makeOption = async (extra_TF, shot_amount) => {
-    const makeOption = await Option.create({
-      extra_TF,
-      shot_amount,
-    });
+  // 옵션 가격
+  optionPrice = async (option_id) => {
+    const optionPrice = await Option.findOne({ when: { id: option_id } });
+    return optionPrice;
   };
 
   // 개별주문하기
-  makeOrder = async (orderItemID, amount, price) => {
+  makeOrder = async (
+    orderItemID,
+    amount,
+    extra_TF,
+    shot_amount,
+    hot_TF,
+    priceInOption
+  ) => {
     try {
       return await sequelize.transaction(async (transaction) => {
         const maxOrderIdResult = await Order_customer.findOne({
@@ -35,8 +40,11 @@ class orderCustomerRepositories {
         const makeOrder = await Item_order_customer.create(
           {
             item_id: orderItemID,
-            amount,
-            price,
+            extra_TF: extra_TF,
+            shot_amount: shot_amount,
+            hot_TF: hot_TF,
+            amount: amount,
+            price: priceInOption,
             order_customers_id: maxOrderId + 1,
           },
           { transaction }

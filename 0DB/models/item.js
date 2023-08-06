@@ -31,6 +31,10 @@ const Item = connector.sequelize.define(
       type: DataTypes.ENUM(Object.values(itemType)),
       allowNull: false,
     },
+    option_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     amount: {
       type: DataTypes.INTEGER,
       allowNull: true,

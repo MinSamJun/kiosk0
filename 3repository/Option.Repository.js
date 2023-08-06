@@ -28,6 +28,13 @@ class OptionRepositories {
       return addItem;
     }
   };
+
+  optionIdRepository = async (option_id) => {
+    const isExistOption = await Option.findOne({
+      where: { id: option_id },
+    });
+    return isExistOption;
+  };
 }
 
 module.exports = OptionRepositories;

@@ -22,6 +22,10 @@ module.exports = {
         type: Sequelize.ENUM("COFFEE", "JUICE", "FOOD"),
         allowNull: false,
       },
+      option_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       amount: {
         type: Sequelize.INTEGER,
         allowNull: true,

@@ -20,10 +20,6 @@ module.exports = {
         allowNull: false,
       },
 
-      option_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
       extra_TF: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

@@ -8,7 +8,7 @@ const { QueryTypes } = require("sequelize");
 
 class ItemRepositories {
   // 메뉴등록
-  itemCreateRepository = async (name, price, type) => {
+  itemCreateRepository = async (name, price, type, option_id) => {
     const isExist = await Item.findOne({
       where: {
         name: name,
@@ -24,6 +24,7 @@ class ItemRepositories {
         name,
         price,
         type,
+        option_id,
       });
       return addItem;
     }

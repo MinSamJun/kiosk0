@@ -20,12 +20,13 @@ class OrderCustomerControllers {
   orderCustomerController = async (req, res) => {
     try {
       const { orderItemID } = req.params;
-      const { amount, extra_TF, shot_amount } = req.body;
+      const { amount, extra_TF, shot_amount, hot_TF } = req.body;
       const result = await this.orderCustomerServices.orderCustomerServices(
         orderItemID,
         amount,
         extra_TF,
-        shot_amount
+        shot_amount,
+        hot_TF
       );
 
       if (result) {
